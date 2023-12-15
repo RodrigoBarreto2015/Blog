@@ -1,5 +1,9 @@
 package com.project.blog.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -38,4 +42,13 @@ public class Post {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+
+	public Post(String title, String description, boolean published) {
+		Date date = new Date();
+
+		this.title = title;
+		this.description = description;
+		this.published = published;
+		this.createdAt = date;
+	}
 }
