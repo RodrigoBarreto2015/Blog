@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -73,6 +74,34 @@ public class PostController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
+
+	@PutMapping("/posts/{id}")
+	public ResponseEntity<Post> updatePost(@PathVariable("id") long id, @RequestBody Post post) {
+		Optional<Post> postData = postRepository.findById(id);
+
+		if (postData.isPresent()) {
+			Post _post = postData.get();
+			_post.setTitle(post.getTitle());
+			_post.setDescription(post.getDescription());
+			_post.setPublished(_post.isPublished());
+			return new ResponseEntity<>(postRepository.save(_post), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/posts/status/{id}")
+	public ResponseEntity<Post> updatePostVisibility(@PathVariable("id") long id, @RequestBody Post published) {
+		Optional<Post> postData = postRepository.findById(id);
+
+		if (postData.isPresent()) {
+			Post _post = postData.get();
+			_post.setPublished(published.isPublished());
+			return new ResponseEntity<>(postRepository.save(_post), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
     @DeleteMapping("/posts/{id}")
 	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
