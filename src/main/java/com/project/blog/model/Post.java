@@ -50,6 +50,6 @@ public class Post {
 		this.title = title;
 		this.description = description;
 		this.published = published;
-		this.acessos = 0;
+		this.access = 0;
 	}
 }
