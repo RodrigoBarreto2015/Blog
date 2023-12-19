@@ -58,6 +58,8 @@ public class PostController {
         Optional<Post> postData = postRepository.findById(id);
 
 		if (postData.isPresent()) {
+			postData.get().setAccess(postData.get().getAccess()+1);
+			updatePost(id, postData.get());
 			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

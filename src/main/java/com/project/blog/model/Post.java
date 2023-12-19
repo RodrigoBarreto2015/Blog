@@ -37,6 +37,9 @@ public class Post {
 	@Column(name = "published")
 	private boolean published;
 
+	@Column(name = "access")
+	private int access;
+
 	@CreationTimestamp(source = SourceType.DB)
 	private Instant createdOn;
 
@@ -47,5 +50,6 @@ public class Post {
 		this.title = title;
 		this.description = description;
 		this.published = published;
+		this.acessos = 0;
 	}
 }
